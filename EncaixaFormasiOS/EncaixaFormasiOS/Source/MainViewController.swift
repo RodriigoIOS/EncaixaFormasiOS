@@ -20,8 +20,8 @@ class MainViewController: UIViewController {
     // MARK: - Setup
     
     private func setupGame() {
-        // 1. Create Level Data (Mock Level 1)
-        let level = createMockLevel()
+        // 1. Create Level Data (Level 1)
+        let level = LevelGenerator.generateLevel1()
         gameEngine = GameEngine(level: level)
         
         // 2. Setup Board View
@@ -53,27 +53,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func createMockLevel() -> Level {
-        // Simplified Level 1 Data based on image
-        // 5x5 Grid? Let's assume 6x6 for now.
-        let rows = 6
-        let cols = 6
-        var config: [GridPosition: BoardCell] = [:]
-        
-        // Add some target spots
-        config[GridPosition(row: 1, col: 1)] = BoardCell(shape: .circle, color: .red, isOccupied: false)
-        config[GridPosition(row: 1, col: 2)] = BoardCell(shape: .square, color: .blue, isOccupied: false)
-        config[GridPosition(row: 2, col: 1)] = BoardCell(shape: .square, color: .yellow, isOccupied: false)
-        
-        // Create a sample piece (T-shape)
-        let tShape: [[ShapeType]] = [
-            [.circle, .circle, .circle],
-            [.none, .square, .none]
-        ]
-        let piece1 = Piece(id: UUID(), color: .red, matrix: tShape, currentPosition: nil)
-        
-        return Level(id: 1, boardRows: rows, boardCols: cols, boardConfiguration: config, pieces: [piece1])
-    }
+
 }
 
 // MARK: - PieceViewDelegate
