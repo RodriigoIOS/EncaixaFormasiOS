@@ -7,6 +7,10 @@ class GameEngine {
     private(set) var currentLevel: Level
     private(set) var boardState: [[BoardCell]]
     
+    /// If true, pieces must match both shape and color.
+    /// If false, pieces must match shape only (Montessori style).
+    var strictColorMatching: Bool = false
+    
     // MARK: - Initialization
     
     init(level: Level) {
@@ -70,8 +74,11 @@ class GameEngine {
                     
                     // 4. Check Rule: Color Match
                     // The piece color must match the board cell color
-                    if let cellColor = boardCell.color, cellColor != piece.color {
-                        return false
+                    // Only enforce if strictColorMatching is true
+                    if strictColorMatching {
+                        if let cellColor = boardCell.color, cellColor != piece.color {
+                            return false
+                        }
                     }
                 }
             }
